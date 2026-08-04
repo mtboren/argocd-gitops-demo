@@ -5,7 +5,19 @@
       "modules": [
         "posh-git"
       ]
+    },
+    // region -- kind pre-reqs / install
+    // Install Docker-in-Docker so kind can spin up cluster containers
+    "ghcr.io/devcontainers/features/docker-in-docker:latest": {
+      "moby": false,
+      "version": "latest"
+    },
+    // Install kubectl and helm to interact with your cluster
+    "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
+      "version": "latest",
+      "installMinikube": false
     }
+    // endregion  
   },
   "customizations": {
     "vscode": {
@@ -19,5 +31,8 @@
       }
     }
   },
-  "postCreateCommand": "pwsh -NoLogo -NoProfile -Command 'Add-PoshGitToProfile'"
+  "postCreateCommand": {
+    "kindInstall": "[ $(uname -m) = x86_64 ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.32.0/kind-linux-amd64 && chmod +x ./kind && sudo mv ./kind /usr/local/bin/kind",
+    "addPoshGitToPSProfile": "pwsh -NoLogo -NoProfile -Command 'Add-PoshGitToProfile'"
+  }
 }
