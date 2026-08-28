@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: local-web-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/mtboren/argocd-gitops-demo.git'
+    targetRevision: main
+    path: apps
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

@@ -31,6 +31,14 @@
       }
     }
   },
+  "portsAttributes": {
+    // make it such that this forwarded port is accessible via https, so consumer need not hassle with changing that in the Codespaces UI themselves (nor need to know about it)
+    "8080": {
+      "label": "Argo CD UI",
+      "protocol": "https",
+      "onAutoForward": "notify"
+    }
+  },
   "postCreateCommand": {
     "kindInstall": "[ $(uname -m) = x86_64 ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.32.0/kind-linux-amd64 && chmod +x ./kind && sudo mv ./kind /usr/local/bin/kind",
     "addPoshGitToPSProfile": "pwsh -NoLogo -NoProfile -Command 'Add-PoshGitToProfile'"
